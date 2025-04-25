@@ -5,7 +5,7 @@ ISTA 350
 Final Project
 
 The program takes data from previous NFL seasons since 1970 and creates three visual figures to represent
-different statistical comparisons.
+different statistical comparisons. A linear model is created and fitted to one of the visuals' data.
 
 '''
 import matplotlib.pyplot as plt
