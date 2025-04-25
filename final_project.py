@@ -1,6 +1,13 @@
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
+'''
+
+Randall Candaso
+ISTA 350
+Final Project
+
+The program takes data from previous NFL seasons since 1970 and creates three visual figures to represent
+different statistical comparisons.
+
+'''
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 import pandas as pd
@@ -26,11 +33,13 @@ def main():
 def get_ols_parameters(x, y):
     """
 
-    :param x: independent variable
-    :param y: independent variable
+    x: independent variable
+    y: independent variable
 
     This function calculates a OLS model and returns the slope, intercept, r^2, and p_val
     values from the model.
+
+    return: linear parameters and statistics (list)
 
     """
     const = sm.add_constant(x)
@@ -44,6 +53,14 @@ def get_ols_parameters(x, y):
 
 
 def make_fig_1(df):
+    '''
+    
+    df: dataframe to be modeled (pd.DataFrame)
+
+    A visual is created to represent the relationship of offensive data to win percentage. Additionally, a linear model is fitted 
+    to the data and plotted to show the behavior of the relationship.
+    
+    '''
     metrics = ["Pass.Yds", "Pass.TD", "Rush.Yds", "Rush.TD"]
     titles = ["Pass Yards vs W-L%", "Pass TDs vs W-L%", "Rush Yards vs W-L%", "Rush TDs vs W-L%"]
 
@@ -77,6 +94,14 @@ def make_fig_1(df):
 
 
 def make_fig_2(df):
+    '''
+    
+    df: dataframe to be visualized (pd.DataFrame)
+
+    The season passing and rushing yards are plotted on a barchart for each playoff eligible team of the 2024 NFL season. 
+    It should be noted that the bars are colored the same for every team except the 2024 Super Bowl winning Eagles. 
+    
+    '''
     new = df[df['Season'] == 2024]
     x = np.arange(len(new.index))
     width = 0.35
@@ -93,7 +118,7 @@ def make_fig_2(df):
 
     ax.set_ylabel('Total Yards')
     ax.set_xlabel('Team')
-    ax.set_title('Yards by 2024 Playoff Teams')
+    ax.set_title('Yards by 2024 Playoff-Eligible Teams')
     ax.set_xticks(x)
     ax.set_xticklabels(new['Team'])
     ax.legend()
@@ -102,6 +127,14 @@ def make_fig_2(df):
 
 
 def make_fig_3(df):
+    '''
+    
+    df: dataframe to be visualized (pd.DataFrame)
+
+    The total defensive stats for all teams for each year is plotted on a line plot. The stats plotted include total 
+    defensive plays, total passing yards allowed, and total rushing yards allowed. 
+    
+    '''
     d_plays = df.groupby('Season')['DPly'].mean()
     opp_pass_yds = df.groupby('Season')['Opp.Pass.Yds'].mean()
     opp_rush_yds = df.groupby('Season')['Opp.Rush.Yds'].mean()
